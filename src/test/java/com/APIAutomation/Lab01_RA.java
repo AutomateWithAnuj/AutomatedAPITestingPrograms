@@ -1,4 +1,4 @@
-package com.AutomateWithAnuj;
+package com.APIAutomation;
 
 import io.restassured.RestAssured;
 
