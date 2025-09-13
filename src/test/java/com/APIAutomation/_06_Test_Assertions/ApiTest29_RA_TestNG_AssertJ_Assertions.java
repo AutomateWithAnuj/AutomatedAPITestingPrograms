@@ -72,6 +72,7 @@ public class ApiTest29_RA_TestNG_AssertJ_Assertions {
         Assert.assertEquals(firstname,"James");
         Assert.assertEquals(lastname,"Brown");
         Assert.assertTrue(depositepaid);
+        //we don't use the soft assertions in these
 
         //AssertJ (3rd Library for assertions) - 20% Companies are using
         assertThat(bookingid).isNotZero().isNotNull().isPositive();//3 assertions in 1 line
