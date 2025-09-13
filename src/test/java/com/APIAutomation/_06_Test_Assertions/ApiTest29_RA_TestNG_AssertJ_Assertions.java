@@ -9,7 +9,9 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import org.hamcrest.Matchers;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -50,7 +52,7 @@ public class ApiTest29_RA_TestNG_AssertJ_Assertions {
         //but we also want to validate the firstname==james, Lastname==brown
         //BookingID must not be null
 
-        //here matchers comes from the hamcrest library
+        //here matchers comes from the hamcrest library //4-5% companies are using this
         vr.body("booking.firstname", Matchers.equalTo("James"));
         vr.body("booking.lastname", Matchers.equalTo("Brown"));
         vr.body("booking.depositpaid", Matchers.equalTo(true));
@@ -60,6 +62,22 @@ public class ApiTest29_RA_TestNG_AssertJ_Assertions {
         //now we want to add testNG and AssertJ Assertions all of these
         //to work with TestNG assertions we need to extract the details
             //firstname, bookingId, lastname, depositepaid
-        bookingID = response.then().extract().path("bookingid");s
+        Integer bookingid = response.then().extract().path("bookingid");
+        String firstname = response.then().extract().path("booking.firstname");
+        String lastname = response.then().extract().path("booking.lastname");
+        boolean depositepaid = response.then().extract().path("booking.depositpaid");
+
+        //now we can use the testNG assertions - 75% companies still using this
+        Assert.assertNotNull(bookingid, "Booking ID should not be null");
+        Assert.assertEquals(firstname,"James");
+        Assert.assertEquals(lastname,"Brown");
+        Assert.assertTrue(depositepaid);
+
+        //AssertJ (3rd Library for assertions) - 20% Companies are using
+        assertThat(bookingid).isNotZero().isNotNull().isPositive();//3 assertions in 1 line
+        assertThat(firstname).isEqualTo("James").isNotBlank().isNotEmpty().isNotNull().isAlphanumeric();
+        assertThat(lastname).isEqualTo("Brown");
+        assertThat(depositepaid).isTrue();
+
     }
 }
