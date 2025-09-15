@@ -1,0 +1,13 @@
+Plain old Java Object Class (POJO)
+
+{                                //class1/parent class/booking class
+  "firstname": "James",
+  "lastname": "Brown",
+  "totalprice": 111,
+  "depositpaid": true,
+  "bookingdates": {               //class2/child class/bookingdates class
+    "checkin": "2018-01-01",
+    "checkout": "2025-10-10"
+  },
+  "additionalneeds": "Breakfast"
+}
