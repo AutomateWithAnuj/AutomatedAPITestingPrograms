@@ -1,73 +1,154 @@
-````markdown name=read.md url=https://github.com/AutomateWithAnuj/AutomatedAPITestingPrograms/blob/4d6c36f15fec54710fe8cb0bc435b1d309e7b70a/src/test/java/com/APIAutomation/read.md
-# API Automation Tests (src/test/java/com/APIAutomation)
+# 🚀 Automated API Testing Programs
 
-## Overview
-This folder contains the automated API tests for the project. Tests are organized under the Java package `com.APIAutomation`. The tests exercise endpoints of the target API, validate responses, and are intended to run as part of the project's CI pipeline or locally during development.
+**Author:** Anuj Rajput  
+**Repository Name:** AutomatedAPITestingPrograms  
+**Language:** Java  
+**Frameworks & Tools:** RestAssured, TestNG, Maven, Allure Report  
 
-## Location
-`src/test/java/com/APIAutomation`
+---
 
-## Prerequisites
-- JDK 8+ installed and `JAVA_HOME` configured.
-- Maven or Gradle available (commands below assume Maven; adjust for Gradle if used).
-- Network access to the API under test (or a running mock/staging instance).
-- Optional: authentication credentials or API token if endpoints require auth.
+## 📘 Overview
 
-## Configuration
-Tests should be configured via one of the following approaches (choose what your project uses):
-- System properties (recommended for CI):
-  - Example: `-DbaseUrl=https://api.example.com -DauthToken=abc123`
-- Environment variables:
-  - `BASE_URL`, `AUTH_TOKEN`, etc.
-- A properties/config file under `src/test/resources` (if present in the repo).
+This repository contains a comprehensive collection of **API Automation Testing programs** using **RestAssured** and **TestNG**. It serves as a complete learning guide for API automation testing, covering everything from basic REST API calls to advanced testing concepts, assertions, payload management, and reporting.
 
-The tests will read configuration from system properties or environment variables. If you add a properties file, document its expected keys and provide an example in `src/test/resources`.
+The repository is organized in a structured manner with each package representing specific API testing concepts and techniques.
 
-## How to run
-From the repository root:
+---
 
-- Run the full test suite (Maven):
-  - mvn test -DbaseUrl="https://api.example.com" -DauthToken="your_token_here"
-- Run a single test class:
-  - mvn -Dtest=MyEndpointTests test -DbaseUrl="https://api.example.com"
-- Run a single test method:
-  - mvn -Dtest=MyEndpointTests#shouldReturn200 test -DbaseUrl="https://api.example.com"
+## 🚀 Tech Stack for API Testing
 
-Or run tests from your IDE (IntelliJ, Eclipse) by executing test classes or methods directly.
+| Technology | Description |
+|------------|-------------|
+| **Java** | Programming language for API automation |
+| **RestAssured** | Java DSL for testing RESTful APIs |
+| **TestNG** | Test framework for organizing and executing test cases |
+| **Maven** | Build automation tool to manage dependencies |
+| **Allure Report** | Reporting framework for detailed test execution reports |
+| **GIT** | Version control system to manage codebase |
+| **JSON** | Data format for API requests and responses |
+| **HTTP Methods** | GET, POST, PUT, PATCH, DELETE |
+| **Assertions** | RestAssured, TestNG, and AssertJ assertions |
 
-CI tips:
-- Pass secrets/tokens via secure CI variables and inject them as environment variables or JVM properties.
-- Use Maven profiles to separate environments (dev/stage/prod) if helpful.
+---
 
-## Project structure (typical)
-- BaseTest / TestBase: common setup/teardown, base URL handling, auth setup.
-- utils/: helper methods for building requests, common assertions, response parsers.
-- models/: POJOs to deserialize JSON responses.
-- tests/: endpoint test classes (one per resource or feature).
-- data/: test data providers or JSON templates (if present).
-- resources/: configuration files used by tests.
+## 📚 Topics Covered
 
-Adjust names according to actual files in this folder.
+### 🔹 1. RestAssured Basics
+- Basic GET requests
+- RestAssured setup and configuration
+- Response validation basics
 
-## Adding a new test
-1. Create a new test class under `com.APIAutomation.tests` (or consistent package).
-2. Reuse utility methods and models where possible.
-3. Keep tests independent and idempotent.
-4. Parameterize tests with data providers for variations.
-5. Add necessary configuration keys to documentation if introducing new ones.
+### 🔹 2. RestAssured Concepts
+- Builder Pattern implementation
+- Running multiple test cases
+- Code organization patterns
 
-## Reporting & Logs
-- Maven Surefire/Failsafe reports are generated under `target/surefire-reports` (or `target/failsafe-reports`).
-- Capture request/response logs in test output or dedicated logs for easier troubleshooting.
+### 🔹 3. TestNG Integration & Reporting
+- TestNG annotations and configuration
+- Running multiple test cases with TestNG
+- Allure Report integration
+- TestNG XML configurations
 
-## Troubleshooting
-- If tests fail due to connectivity, verify `BASE_URL` and network access.
-- For authentication failures, confirm tokens/credentials and headers being sent.
-- Inspect the surefire reports and printed logs for stack traces and request/response payloads.
+### 🔹 4. HTTP Methods Implementation
+- **GET Requests**: BDDStyle and Non-BDDStyle
+- **POST Requests**: BDDStyle and Non-BDDStyle  
+- **PUT Requests**: BDDStyle and Non-BDDStyle
+- **PATCH Requests**: BDDStyle and Non-BDDStyle
+- **DELETE Requests**: BDDStyle and Non-BDDStyle
 
-## Contributing / Contact
-- Follow existing test patterns when adding new tests.
-- Keep tests small and focused on one behavior per test.
-- For questions about these tests, contact the repository owner: @AutomateWithAnuj
+### 🔹 5. TestNG Advanced Features
+- Runnable Test Cases vs Normal Methods
+- BeforeTest and AfterTest annotations
+- Test Priority management
+- Test Groups configuration
+- DependsOnMethod functionality
+- Parameterized tests
+- Enabled/Disabled tests
+- AlwaysRun behavior
+- InvocationCount usage
+- Complete annotations overview
 
-````
+### 🔹 6. Test Assertions
+- RestAssured built-in assertions
+- TestNG assertions
+- Combined RA-TestNG-AssertJ assertions
+- Response validation techniques
+
+### 🔹 7. Payload Management
+- Class-based payloads
+- HashMap payload management
+- String payloads
+- JSON payload creation and management
+
+---
+
+## 🗂 Complete Folder Structure
+
+```text
+AutomatedAPITestingPrograms/
+│
+├── 📁 src/test/java/com/APIAutomation/
+│   ├── _01_RA_Basics/
+│   │   ├── ApiTest01_BasicGet.java
+│   │   └── ApiTest02_BasicGet.java
+│   │
+│   ├── _02_RA_Concepts/
+│   │   ├── ApiTest03_NoPattern.java
+│   │   ├── ApiTest04_BuilderPattern.java
+│   │   └── ApiTest05_RunDupMulTestCases.java
+│   │
+│   ├── _03_TestNG_AllureReport/
+│   │   ├── ApiTest06_RunMulTestCases.java
+│   │   └── ApiTest07_RunMulTestCases.java
+│   │
+│   ├── _04_RA_HTTP_Methods/
+│   │   ├── GET/
+│   │   │   ├── ApiTest08_GET_BDDStyle.java
+│   │   │   └── ApiTest09_GET_NonBDDStyle.java
+│   │   ├── POST/
+│   │   │   ├── ApiTest10_POST_BDDStyle.java
+│   │   │   └── ApiTest11_POST_NonBDDStyle.java
+│   │   ├── PUT/
+│   │   │   └── ApiTest12_PUT_NonBDDStyle.java
+│   │   ├── PATCH/
+│   │   │   └── ApiTest13_PATCH_NonBDDStyle.java
+│   │   └── DELETE/
+│   │       └── ApiTest14_DELETE_NonBDDStyle.java
+│   │
+│   ├── _05_TestNG_Examples/
+│   │   ├── ApiTest15_RunnableTC_vs_NormalMethod.java
+│   │   ├── ApiTest16_BeforeTest_AfterTest.java
+│   │   ├── ApiTest17_Priority.java
+│   │   ├── ApiTest18_Groups.java
+│   │   ├── ApiTest19_DependsOnMethod.java
+│   │   ├── ApiTest20_Parameter.java
+│   │   ├── ApiTest21_Enabled.java
+│   │   ├── ApiTest22_AlwaysRun.java
+│   │   ├── ApiTest23_AlwaysRun.java
+│   │   ├── ApiTest24_InvocationCount.java
+│   │   ├── ApiTest25_All_Annotations.java
+│   │   └── ApiTest26_All_Annotations_Review.java
+│   │
+│   ├── _06_Test_Assertions/
+│   │   ├── ApiTest27_RA_Assertions.java
+│   │   ├── ApiTest28_TestNG_Assertions.java
+│   │   └── ApiTest29_RA_TestNG_AssertJ_Assertions.java
+│   │
+│   └── _07_Payload_Management/
+│       ├── Class/
+│       ├── Hashmap/
+│       └── String/
+│
+├── 📁 src/test/resources/
+│   ├── testng.xml
+│   ├── testng_ApiTest06.xml
+│   ├── testng_ApiTest07.xml
+│   ├── testng_ApiTest18_Groups_Sanity.xml
+│   ├── testng_ApiTest20_Parameter_chrome.xml
+│   └── testng_ApiTest20_Parameter_firefox.xml
+│
+├── 📁 allure-results/
+├── 📁 .idea/
+├── .gitignore
+├── README.md
+└── pom.xml
