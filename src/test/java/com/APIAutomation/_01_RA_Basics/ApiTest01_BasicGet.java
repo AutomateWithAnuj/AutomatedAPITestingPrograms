@@ -2,14 +2,36 @@ package com.APIAutomation._01_RA_Basics;
 
 import io.restassured.RestAssured;
 
+/**
+ * This class demonstrates a very basic REST Assured GET API test.
+ * It sends a GET request to the /ping endpoint and validates the response status code.
+ */
 public class ApiTest01_BasicGet {
+
+    /**
+     * Main method – execution starts from here.
+     * Used to run this API test as a simple Java program.
+     */
     public static void main(String[] args) {
-        RestAssured.given()
-                .baseUri("https://restful-booker.herokuapp.com/ping") //this is the URL we are going to use
-                .when()
-                    .get() //in when we need to write what method we have to use
-                    //we can use here .post, .put, .patch, .delete
-                .then()
-                    .log().all().statusCode(201);
+
+        // RestAssured.given() → Used to build the request specification
+        RestAssured
+            .given()
+                // Base URI of the API endpoint we want to test
+                // This endpoint is used to check whether the server is up or not
+                .baseUri("https://restful-booker.herokuapp.com/ping")
+            .when()
+                // HTTP method to be executed
+                // Here we are sending a GET request
+                .get()
+                // Other methods like .post(), .put(), .patch(), .delete() can also be used here
+            .then()
+                // Logs complete request and response details to the console
+                // Useful for debugging and understanding API behavior
+                .log().all()   // Console output: headers, body, status line, etc.
+                
+                // Validates that the response status code is 201
+                // Test will fail if the actual status code is not 201
+                .statusCode(201); // Console validation result
     }
 }
