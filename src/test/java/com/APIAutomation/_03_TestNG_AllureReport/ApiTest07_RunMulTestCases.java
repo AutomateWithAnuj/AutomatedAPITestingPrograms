@@ -4,64 +4,88 @@ import io.restassured.RestAssured;
 import org.testng.annotations.Test;
 
 /**
- * This class demonstrates running multiple API test cases
- * using TestNG with reusable request logic.
+ * This class demonstrates an IMPROVED version of BDD-style testing
+ * by introducing a reusable helper method.
  *
- * Each @Test method represents one independent test case.
+ * Improvement over previous version:
+ * - Common Rest Assured code is moved into one method
+ * - Test methods only pass test data and expected result
+ *
+ * Still a Limitation (Important Concept):
+ * - This is STILL BDD style
+ * - Reusability is better, but NOT as flexible as Non-BDD style
  */
 public class ApiTest07_RunMulTestCases {
 
     /**
-     * Reusable helper method to execute a GET request.
-     * Purpose: Avoids duplicating Rest Assured code in every test.
+     * Reusable helper method for executing GET requests.
      *
-     * @param pincode           Input pincode used in API path
-     * @param expectedStatus   Expected HTTP status code to validate
+     * Why this method exists:
+     * - Avoids repeating given() → when() → then() in every test
+     * - Improves readability and reduces duplication
+     *
+     * @param pincode Input value to be passed in API path
+     * @param expectedStatus Expected HTTP status code for validation
      */
     private void runGetRequest(String pincode, int expectedStatus) {
 
-        // Rest Assured fluent-style API call
         RestAssured
-                .given() // Step 1: Build the request
-                .baseUri("https://api.zippopotam.us") // API base URL
-                .basePath("/IN/" + pincode) // Country + dynamic pincode
-                .when() // Step 2: Trigger the request
-                .get() // HTTP GET request
+                .given() // Step 1: Prepare request (BDD style starts here)
+                .baseUri("https://api.zippopotam.us") // Base URL of the API
+                .basePath("/IN/" + pincode) // Dynamic pincode passed in path
+                .when() // Step 2: Perform the action
+                .get() // Sends HTTP GET request
                 .then() // Step 3: Validate the response
-                .log().all() // Prints full request & response to console
-                // Console Output: Headers, body, and status details
-                .statusCode(expectedStatus); // Asserts expected status code
+                .log().all() // Prints full response on console for debugging
+                // Console Output: Status line, headers, and response body
+                .statusCode(expectedStatus); // Validates HTTP status code
     }
 
     /**
-     * Positive test case
+     * Positive Test Case
      * Scenario: Valid Indian pincode
      */
     @Test
     public void test_GET_POSITIVE_TC1() {
-        runGetRequest("110048", 200); // Expected Output: Successful response, status 200
+        runGetRequest("110048", 200);
+        // Console Output: Successful API response with status code 200
     }
 
     /**
-     * Negative test case
-     * Scenario: Invalid special character as pincode
+     * Negative Test Case
+     * Scenario: Invalid pincode using special character
      */
     @Test
     public void test_GET_NEGATIVE_TC2() {
-        runGetRequest("@", 404); // Expected Output: Error response, status 404
+        runGetRequest("@", 404);
+        // Console Output: Error response with status code 404
     }
 
     /**
-     * Negative test case
+     * Negative Test Case
      * Scenario: Blank space as pincode
      */
     @Test
     public void test_GET_NEGATIVE_TC3() {
-        runGetRequest(" ", 404); // Expected Output: Error response, status 404
+        runGetRequest(" ", 404);
+        // Console Output: Error response with status code 404
     }
 
-    // NOTE:
-    // Although request logic is reused,
-    // test methods still grow as test cases increase.
-    // This highlights the need for better scalability (e.g., data-driven tests).
+    /*
+     * IMPORTANT INTERVIEW POINT:
+     *
+     * - This approach is MORE reusable than pure BDD tests
+     * - Common request logic is centralized in one method
+     *
+     * BUT:
+     * - given(), when(), then() are still tightly coupled
+     * - Validation and execution happen together
+     *
+     * Non-BDD style (RequestSpecification / Response)
+     * offers EVEN BETTER reusability and flexibility:
+     * - Request creation
+     * - Request execution
+     * - Response validation
+     * can all be controlled independently
+     */
 }
