@@ -1,14 +1,14 @@
 package com.APIAutomation._02_RA_Concepts;
 
-/**
- * This class demonstrates a simple Java program
- * where methods are executed one by one without
- * following any design pattern (No Pattern).
- * This program demonstrates how API test execution works step by step, 
- * how test actions are separated into methods,
- * how data flows between steps, 
- * and why design patterns are later introduced to improve readability and maintainability.
- */
+/*
+This code demonstrates:
+Execution happens step by step
+Methods are called in sequence
+Data can be passed from one step to another
+No structure, no chaining, no pattern
+*/
+/*This no-pattern example helps understand API execution flow step by step. 
+Rest Assured improves this by returning objects at each step, enabling chaining, readability, and maintainability.*/
 public class ApiTest03_NoPattern {
 
     /**
@@ -57,9 +57,8 @@ public class ApiTest03_NoPattern {
     }
 }
 /*
-This code demonstrates:
-Execution happens step by step
-Methods are called in sequence
-Data can be passed from one step to another
-No structure, no chaining, no pattern
+given() → returns RequestSpecification
+when()  → returns Response
+then()  → returns ValidatableResponse
+in Rest Assured each method returns an object, and that returned object is implicitly passed to the next method in the chain.
 */
