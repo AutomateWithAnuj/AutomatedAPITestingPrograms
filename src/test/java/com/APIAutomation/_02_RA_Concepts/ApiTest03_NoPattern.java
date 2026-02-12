@@ -60,5 +60,6 @@ public class ApiTest03_NoPattern {
 given() → returns RequestSpecification
 when()  → returns Response
 then()  → returns ValidatableResponse
-in Rest Assured each method returns an object, and that returned object is implicitly passed to the next method in the chain.
+in Rest Assured each method returns an object, 
+and that returned object is implicitly passed to the next method in the chain.
 */
