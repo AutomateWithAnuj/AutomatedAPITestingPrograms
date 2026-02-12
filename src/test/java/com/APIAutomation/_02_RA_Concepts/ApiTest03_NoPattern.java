@@ -51,5 +51,15 @@ public class ApiTest03_NoPattern {
         test.step1();                 // Executes Step 1
         test.step2();                 // Executes Step 2
         test.step3("Anuj");           // Executes Step 3 with input parameter
+        /*Step 1 → Setup
+        Step 2 → Action
+        Step 3 → Validation*/
     }
 }
+/*
+This code demonstrates:
+Execution happens step by step
+Methods are called in sequence
+Data can be passed from one step to another
+No structure, no chaining, no pattern
+*/
