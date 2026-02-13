@@ -7,40 +7,69 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.Test;
 
+/**
+ * This class demonstrates how to perform a POST request
+ * using Rest Assured in NON-BDD style.
+ *
+ * API Used:
+ * POST https://restful-booker.herokuapp.com/auth
+ *
+ * Purpose:
+ * - Send username & password as JSON payload
+ * - Validate that the response status code is 200 (OK)
+ */
 public class ApiTest11_POST_NonBDDStyle {
-    RequestSpecification r;
-    Response response;
-    ValidatableResponse vr;
+
+    // RequestSpecification is used to build the HTTP request
+    private RequestSpecification request;
+
+    // Response stores the raw response received from the server
+    private Response response;
+
+    // ValidatableResponse is used for assertions/validations
+    private ValidatableResponse validatableResponse;
+
+    /**
+     * Test method to validate the authentication API using the POST method
+     */
     @Test
-    public void test_POST_Auth(){
+    public void testPostAuth() {
 
-        //URL -> https://restful-booker.herokuapp.com/auth
-        //Payload
-        //{
-        //    "username" : "admin",
-        //    "password" : "password123"
-        //}
-
+        // -------------------- Request Payload --------------------
+        // JSON body required by the /auth API
         String payload = "{\n" +
-                "    \"username\" : \"admin\",\n" +
-                "    \"password\" : \"password123\"\n" +
+                "  \"username\" : \"admin\",\n" +
+                "  \"password\" : \"password123\"\n" +
                 "}";
-        //Pre-condition - Preparing Request - URL, Headers, Auth?, Payload
-        System.out.println("<---------Part 1----------->");
-        r = RestAssured.given();
-        r.baseUri("https://restful-booker.herokuapp.com");
-        r.basePath("/auth");
-        r.contentType(ContentType.JSON);
-        r.log().all().body(payload);
 
-        //Making HTTP Request -> Part 2
-        System.out.println("<---------Part 2----------->");
-        response = r.when().log().all().post();
+        // -------------------- PART 1: Pre-condition --------------------
+        // Preparing the request: base URI, base path, headers, and body
+        System.out.println("<---------Part 1 : Request Preparation----------->"); 
+        // Console Output: Indicates start of request setup
 
-        //Verification Part -> Part 3
-        System.out.println("<---------Part 3----------->");
-        vr = response.then();
-        vr.log().all().statusCode(200);
+        request = RestAssured.given();                 // Initialize request builder
+        request.baseUri("https://restful-booker.herokuapp.com"); // Base URL of the API
+        request.basePath("/auth");                     // Endpoint path
+        request.contentType(ContentType.JSON);         // Inform server that payload is JSON
+        request.body(payload);                         // Attach JSON payload to request
+        request.log().all();                           // Console Output: Logs complete request details
+
+        // -------------------- PART 2: Action --------------------
+        // Sending the POST request to the server
+        System.out.println("<---------Part 2 : HTTP Request----------->"); 
+        // Console Output: Indicates API call execution
+
+        response = request
+                .when()                                // Specifies when the request is sent
+                .post();                               // Executes POST request
+
+        // -------------------- PART 3: Verification --------------------
+        // Validating the response received from the server
+        System.out.println("<---------Part 3 : Response Validation----------->"); 
+        // Console Output: Indicates start of validation
+
+        validatableResponse = response.then();         // Convert response for validation
+        validatableResponse.log().all();                // Console Output: Logs full response body + headers
+        validatableResponse.statusCode(200);            // Assertion: API must return HTTP 200 OK
     }
-
 }
