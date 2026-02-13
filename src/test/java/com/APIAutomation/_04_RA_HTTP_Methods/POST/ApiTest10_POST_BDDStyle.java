@@ -4,30 +4,59 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
 
+/**
+ * This class demonstrates how to generate an authentication token
+ * using POST request in Rest Assured BDD style.
+ *
+ * API Used: /auth
+ * Purpose : Authenticate user and receive token
+ */
 public class ApiTest10_POST_BDDStyle {
+
+    /**
+     * Test method to authenticate user
+     * using username and password.
+     */
     @Test
-    public void test_POST_Auth(){
+    public void test_POST_Auth() {
 
-        //URL -> https://restful-booker.herokuapp.com/auth
-        //Payload
-        //{
-        //    "username" : "admin",
-        //    "password" : "password123"
-        //}
-
-        String payload = "{\n" +
-                "    \"username\" : \"admin\",\n" +
-                "    \"password\" : \"password123\"\n" +
+        // JSON payload containing login credentials
+        // This data is sent to server to generate auth token
+        String authPayload = "{\n" +
+                "  \"username\" : \"admin\",\n" +
+                "  \"password\" : \"password123\"\n" +
                 "}";
+
+        // BDD-style Rest Assured request
         RestAssured
                 .given()
+                    // Base URI of Restful Booker application
                     .baseUri("https://restful-booker.herokuapp.com")
+
+                    // API endpoint for authentication
                     .basePath("/auth")
+
+                    // Specify request body format as JSON
                     .contentType(ContentType.JSON)
-                    .log().all().body(payload)
+
+                    // Print complete request details on console
+                    // (headers, body, URI)
+                    .log().all()
+
+                    // Attach authentication payload to request body
+                    .body(authPayload)
                 .when()
-                    .log().all().post()
+                    // Print request execution details on console
+                    .log().all()
+
+                    // Send POST request to /auth endpoint
+                    .post()
                 .then()
-                .log().all().statusCode(200);
+                    // Print complete response details on console
+                    // (status code, headers, response body with token)
+                    .log().all()
+
+                    // Validate that authentication is successful
+                    .statusCode(200);
     }
 }
