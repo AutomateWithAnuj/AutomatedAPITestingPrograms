@@ -63,6 +63,9 @@ public class ApiTest11_POST_NonBDDStyle {
                 .when()                                // Specifies when the request is sent
                 .post();                               // Executes POST request
 
+        // response = request.when(); // ❌ wrong type
+        // response.post();           // ❌ invalid
+
         // -------------------- PART 3: Verification --------------------
         // Validating the response received from the server
         System.out.println("<---------Part 3 : Response Validation----------->"); 
