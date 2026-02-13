@@ -14,14 +14,16 @@ import org.testng.annotations.Test;
 public class ApiTest10_POST_BDDStyle {
 
     /**
-     * Test method to authenticate user
+     * Test method to authenticate the user
      * using username and password.
      */
     @Test
     public void test_POST_Auth() {
 
         // JSON payload containing login credentials
-        // This data is sent to server to generate auth token
+        // This data is sent to server to generate an auth token
+        // The auth payload can be sent as a String, Map, POJO, or external JSON file. 
+        // Rest Assured serialises it into JSON before sending it to the server.
         String authPayload = "{\n" +
                 "  \"username\" : \"admin\",\n" +
                 "  \"password\" : \"password123\"\n" +
