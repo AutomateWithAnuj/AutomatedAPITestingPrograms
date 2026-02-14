@@ -19,6 +19,7 @@ public class ApiTest20_Parameter {
      * @Parameters("browser")
      * - Reads the value of "browser" from testng.xml.
      * - That value is injected into this method as a String.
+     * - <parameter name="browser" value="chrome"/>
      */
     @Parameters("browser")
     @Test
