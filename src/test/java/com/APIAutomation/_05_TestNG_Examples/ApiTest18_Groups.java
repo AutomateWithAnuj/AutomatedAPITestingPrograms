@@ -55,4 +55,10 @@ public class ApiTest18_Groups {
         System.out.println("Smoke");  // Output: Smoke
         Assert.assertTrue(false);     // Test Status: FAIL (condition is false)
     }
+    //Let's suppose the red and p1 runs then the output will be
+    /*
+    Sanity
+    Reg
+    Reg
+    */
 }
