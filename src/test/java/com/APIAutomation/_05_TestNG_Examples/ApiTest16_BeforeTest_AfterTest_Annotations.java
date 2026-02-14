@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
  * Scenario (PUT Request Flow):
  * Step 1 → Get Token
  * Step 2 → Get Booking ID
- * Step 3 → Execute PUT request using above data
+ * Step 3 → Execute PUT request using the above data
  * Step 4 → Close/cleanup resources
  */
 public class ApiTest16_BeforeTest_AfterTest_Annotations {
@@ -30,7 +30,7 @@ public class ApiTest16_BeforeTest_AfterTest_Annotations {
 
     /**
      * This method also runs BEFORE any test method.
-     * Note: Multiple @BeforeTest methods are allowed.
+     * Note: Multiple @BeforeTest or same tags methods are allowed, and they will execute alphabetically if no priority is specified.
      * Purpose: Simulates fetching Booking ID.
      */
     @BeforeTest
@@ -48,8 +48,8 @@ public class ApiTest16_BeforeTest_AfterTest_Annotations {
      * This is the actual TestNG test case.
      * It executes after all @BeforeTest methods.
      * Purpose: Simulates executing a PUT request.
-     * If a class contains @BeforeTest and @AfterTest but no @Test method, 
-     * then TestNG will not execute anything because lifecycle annotations are triggered only when at least one test method is present.
+     * When priority is same (or not specified), TestNG usually executes methods in alphabetical order.
+     * However, this order is not officially guaranteed, so we should not depend on it.
      */
     @Test
     public void testPUT() {
@@ -58,9 +58,6 @@ public class ApiTest16_BeforeTest_AfterTest_Annotations {
     }
 
     /*
-    * By default, TestNG does not guarantee alphabetical execution. 
-    * In some environments, it may appear alphabetical due to reflection order, but it is not officially guaranteed. 
-    * If order matters, we should use priority or dependsOnMethods.
     */
     
     /**
