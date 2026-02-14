@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    TestNG Suite Configuration File
+    ------------------------------------------------------
+    Purpose:
+    - Defines the overall test execution structure.
+    - Specifies which test class should be executed.
+    - No group filtering is applied in this configuration.
+-->
+
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<!-- 
+    <suite> → Highest execution level in TestNG.
+    Represents the complete test run.
+-->
 <suite name="Pincode Verification Project">
-    <test verbose="2" preserve-order="true" name="AutomatedAPITestingPrograms">
+
+    <!-- 
+        <test> → Logical execution block inside the suite.
+
+        Attributes:
+        verbose="2"
+            → Displays detailed execution logs in the console.
+
+        preserve-order="true"
+            → Ensures classes execute in the same order
+              as defined in this XML file.
+    -->
+    <test name="AutomatedAPITestingPrograms"
+          verbose="2"
+          preserve-order="true">
+
+        <!-- 
+            <classes> → Defines which test classes to execute.
+        -->
         <classes>
-            <class name="com.APIAutomation._03_TestNG_AllureReport.ApiTest07_RunMulTestCases">
-            </class>
+
+            <!-- 
+                Fully Qualified Class Name (FQCN)
+                This class will be executed.
+                All @Test methods inside this class will run
+                unless controlled by annotations inside the class.
+            -->
+            <class name="com.APIAutomation._03_TestNG_AllureReport.ApiTest07_RunMulTestCases"/>
+
         </classes>
+
     </test>
+
 </suite>
