@@ -1,12 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    TestNG XML Suite File
+    -------------------------------------------------------
+    Purpose:
+    - Defines the complete test suite execution.
+    - Passes parameter values from XML to the TestNG test class.
+    - Executes the specified test class.
+-->
+
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<!-- 
+    <suite> → Highest level container in TestNG.
+    Represents the entire test execution.
+-->
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true"
-          name="APIAutomationProgram">
-        <parameter name="browser" value="chrome"></parameter>
+
+    <!-- 
+        <test> → Logical execution block inside the suite.
+
+        Attributes:
+        verbose="2"
+            → Displays detailed execution logs in the console.
+
+        preserve-order="true"
+            → Maintains class execution order as defined below.
+    -->
+    <test name="APIAutomationProgram"
+          verbose="2"
+          preserve-order="true">
+
+        <!--
+            Parameter Definition Section
+
+            This parameter:
+            name  = "browser"
+            value = "chrome"
+
+            It will be passed to the test method
+            annotated with @Parameters("browser")
+            inside ApiTest20_Parameter class.
+        -->
+        <parameter name="browser" value="chrome"/>
+
+        <!-- 
+            Class Execution Section
+            Specifies which test class to run.
+        -->
         <classes>
-            <class name="com.APIAutomation._05_TestNG_Examples.ApiTest20_Parameter">
-            </class>
+
+            <!--
+                Fully Qualified Class Name (FQCN)
+                This class will execute using the above parameter.
+            -->
+            <class name="com.APIAutomation._05_TestNG_Examples.ApiTest20_Parameter"/>
+
         </classes>
+
     </test>
+
 </suite>
