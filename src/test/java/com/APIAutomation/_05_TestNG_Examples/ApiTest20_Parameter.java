@@ -23,7 +23,7 @@ public class ApiTest20_Parameter {
      */
     @Parameters("browser")
     @Test
-    public void demoTest(String browser) {
+    public void demoTest(String browser) { //chrome
 
         System.out.println("Hi I am demo"); 
         // Output: Hi I am demo
