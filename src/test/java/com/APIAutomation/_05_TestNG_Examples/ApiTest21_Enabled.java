@@ -1,56 +1,58 @@
 package com.APIAutomation._05_TestNG_Examples;
 
-import org.testng.Assert;        // Used for performing validations (assertions)
-import org.testng.annotations.Test;  // Used to mark methods as TestNG test cases
+import org.testng.Assert;              // Used for validation (Assertions)
+import org.testng.annotations.Test;    // Used to mark methods as TestNG test cases
 
 /**
- * Class Name: ApiTest21Enabled
+ * Class Name: ApiTest21_Enabled
  *
  * Purpose:
- * This class demonstrates basic TestNG test methods.
- * Each method is marked with @Test annotation,
- * meaning TestNG will execute them as independent test cases.
+ * This class demonstrates how to use the 'enabled' attribute
+ * inside the @Test annotation in TestNG.
  *
- * All test methods here validate a simple condition: true == true.
- * So all tests will PASS.
+ * - enabled = true  → Test will execute
+ * - enabled = false → Test will be skipped
+ *
+ * By default, enabled = true (even if not written explicitly).
  */
 public class ApiTest21_Enabled {
 
     /**
      * Test Case 1
-     * Purpose: Validates that the condition is true.
+     * enabled = true (Explicitly written, though the default is true)
+     * This test will EXECUTE.
      */
-    @Test
+    @Test(enabled = true)
     public void test01() {
 
-        // Assert that the given condition is TRUE.
-        // If the condition is false, the test will FAIL.
-        Assert.assertTrue(true);  // Expected: PASS
+        // Validating that condition is TRUE.
+        // Since condition is true → Test will PASS.
+        Assert.assertTrue(true);  // Expected Output in TestNG Report: PASSED
     }
 
     /**
      * Test Case 2
-     * Purpose: Another independent test case.
-     * TestNG treats this separately from test01.
+     * enabled = false
+     * This test will NOT execute.
+     * TestNG will SKIP this test.
      */
-    @Test
+    @Test(enabled = false)
     public void test02() {
 
-        // Checking a true condition.
-        // Since condition is true, this test will PASS.
-        Assert.assertTrue(true);  // Expected: PASS
+        // This line will never execute because test is disabled.
+        Assert.assertTrue(true);  // Expected Output in TestNG Report: SKIPPED
     }
 
     /**
      * Test Case 3
-     * Purpose: Demonstrates multiple test methods in a single class.
-     * Each method runs independently.
+     * enabled = true
+     * This test will EXECUTE normally.
      */
-    @Test
+    @Test(enabled = true)
     public void test03() {
 
-        // Validates that true is true.
+        // Checking a true condition.
         // This assertion will PASS.
-        Assert.assertTrue(true);  // Expected: PASS
+        Assert.assertTrue(true);  // Expected Output in TestNG Report: PASSED
     }
 }
