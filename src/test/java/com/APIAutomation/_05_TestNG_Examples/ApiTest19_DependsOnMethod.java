@@ -20,7 +20,7 @@ public class ApiTest19_DependsOnMethod {
      * Example: Server must start successfully before running dependent tests.
      *
      * Since no dependency is defined here,
-     * this test runs independently.
+     * This test runs independently.
      */
     @Test
     public void serverStartedOk() {
@@ -52,10 +52,16 @@ public class ApiTest19_DependsOnMethod {
      * Execution order is not guaranteed unless priority is defined.
      */
     @Test
-    public void testMethod2() {
+    public void testMethod0() {
 
         System.out.println("method2"); // Output: method2
 
         Assert.assertTrue(true); // Test Status: PASS
     }
 }
+/*
+* this will be the order of execution
+* serverStartedOk
+* testMethod0
+* testMethod1
+*/
