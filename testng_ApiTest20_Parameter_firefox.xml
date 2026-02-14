@@ -1,12 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    TestNG Suite Configuration File
+    -------------------------------------------------------
+    Purpose:
+    - Defines the complete test suite execution.
+    - Passes the parameter "browser" with value "firefox"
+      to the TestNG test class.
+-->
+
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<!--
+    <suite> → Top-level container in TestNG.
+    Represents the entire execution plan.
+-->
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true"
-          name="APIAutomationProgram">
-        <parameter name="browser" value="firefox"></parameter>
+
+    <!--
+        <test> → Logical execution block.
+
+        verbose="2"
+            → Shows detailed logs in the console.
+
+        preserve-order="true"
+            → Maintains execution order of classes as defined.
+    -->
+    <test name="APIAutomationProgram"
+          verbose="2"
+          preserve-order="true">
+
+        <!--
+            Parameter Section
+
+            This parameter:
+            name  = "browser"
+            value = "firefox"
+
+            It will be injected into the method
+            annotated with @Parameters("browser")
+            inside ApiTest20_Parameter class.
+
+            Expected Console Output from Java class:
+            Hi I am demo
+            You are running this parameter
+            Start the firefox
+        -->
+        <parameter name="browser" value="firefox"/>
+
+        <!--
+            Class Execution Section
+            Defines which test class should run.
+        -->
         <classes>
-            <class name="com.APIAutomation._05_TestNG_Examples.ApiTest20_Parameter">
-            </class>
+
+            <!-- Fully Qualified Class Name (FQCN) -->
+            <class name="com.APIAutomation._05_TestNG_Examples.ApiTest20_Parameter"/>
+
         </classes>
+
     </test>
+
 </suite>
