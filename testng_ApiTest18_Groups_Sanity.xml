@@ -1,16 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    TestNG Suite Configuration File
+    Purpose:
+    - Defines which test classes to run
+    - Controls execution behavior
+    - Filters tests using Groups (include/exclude)
+
+    This suite runs:
+    ✔ Only tests belonging to "reg" group
+    ✘ Excludes tests belonging to "p1" group
+-->
+
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<!-- Suite Level: Highest execution level in TestNG -->
 <suite name="Pincode Verification Project">
-    <test verbose="2" preserve-order="true" name="AutomatedAPITestingPrograms">
+
+    <!-- 
+        <test> tag represents a logical test execution block.
+        verbose="2" → Shows detailed logs in console.
+        preserve-order="true" → Maintains class execution order as defined below.
+    -->
+    <test name="AutomatedAPITestingPrograms"
+          verbose="2"
+          preserve-order="true">
+
+        <!-- 
+            Group Filtering Section
+            Only selected groups will execute.
+        -->
         <groups>
             <run>
-                <include name="reg"></include>
-                <exclude name="p1"></exclude>
+
+                <!-- Include all test methods that belong to "reg" group -->
+                <include name="reg"/>
+
+                <!-- Exclude test methods that belong to "p1" group -->
+                <exclude name="p1"/>
+
+                <!-- 
+                    Final Execution Logic:
+                    - Test must be in "reg"
+                    - If also in "p1", it will be excluded
+                -->
+
             </run>
         </groups>
+
+        <!-- 
+            Class Level Definition
+            Specifies which test class to execute.
+        -->
         <classes>
-            <class name="com.APIAutomation._05_TestNG_Examples.ApiTest18_Groups">
-            </class>
+
+            <!-- Fully Qualified Class Name -->
+            <class name="com.APIAutomation._05_TestNG_Examples.ApiTest18_Groups"/>
+
         </classes>
+
     </test>
+
 </suite>
