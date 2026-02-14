@@ -20,7 +20,7 @@ public class ApiTest16_BeforeTest_AfterTest_Annotations {
 
     /**
      * This method runs BEFORE any test method.
-     * Purpose: Simulates generating authentication token.
+     * Purpose: Simulates generating an authentication token.
      */
     @BeforeTest
     public void getToken() {
@@ -39,10 +39,17 @@ public class ApiTest16_BeforeTest_AfterTest_Annotations {
         // Output: BeforeTest - Get Booking ID
     }
 
+    /*
+    * If multiple @BeforeTest methods are present, TestNG does not guarantee execution order. 
+    * So we should not rely on it and instead control order using dependsOnMethods or combine logic into a single setup method.
+    */
+    
     /**
      * This is the actual TestNG test case.
      * It executes after all @BeforeTest methods.
-     * Purpose: Simulates executing PUT request.
+     * Purpose: Simulates executing a PUT request.
+     * If a class contains @BeforeTest and @AfterTest but no @Test method, 
+     * then TestNG will not execute anything because lifecycle annotations are triggered only when at least one test method is present.
      */
     @Test
     public void testPUT() {
@@ -50,6 +57,12 @@ public class ApiTest16_BeforeTest_AfterTest_Annotations {
         // Output: Test - Execute PUT Request
     }
 
+    /*
+    * By default, TestNG does not guarantee alphabetical execution. 
+    * In some environments, it may appear alphabetical due to reflection order, but it is not officially guaranteed. 
+    * If order matters, we should use priority or dependsOnMethods.
+    */
+    
     /**
      * This method runs AFTER all @Test methods are executed.
      * Purpose: Cleanup activities (closing connections, etc.).
