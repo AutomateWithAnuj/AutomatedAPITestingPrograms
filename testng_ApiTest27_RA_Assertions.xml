@@ -1,11 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    XML declaration:
+    version="1.0"  → XML standard version
+    encoding="UTF-8" → Character encoding format
+-->
+
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!--
+    DOCTYPE declaration:
+    Tells TestNG to validate this file using TestNG DTD rules.
+-->
+
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true"
-          name="APIAutomationProgram">
+    <!--
+        <suite> → Root tag of TestNG XML file
+        name="All Test Suite" → Name shown in TestNG report output
+    -->
+
+    <test name="APIAutomationProgram"
+          verbose="2"
+          preserve-order="true">
+        <!--
+            <test> → Logical test grouping inside suite
+
+            name → Display name in execution report
+            verbose="2" → Medium level console logs
+            preserve-order="true" →
+                Executes classes in the same order
+                as written inside <classes> tag
+        -->
+
         <classes>
-            <class name="com.APIAutomation._06_Test_Assertions.ApiTest27_RA_Assertions">
-            </class>
+            <!--
+                <classes> → Used to include one or more test classes
+            -->
+
+            <class name="com.APIAutomation._06_Test_Assertions.ApiTest27_RA_Assertions"/>
+            <!--
+                <class> → Fully qualified class name (package + class name)
+                This class will be executed when suite runs.
+
+                If multiple classes are added,
+                they will run in the order defined above
+                (because preserve-order="true").
+            -->
+
         </classes>
+
     </test>
+
 </suite>
+
+<!--
+Execution Flow:
+1. TestNG reads this XML file.
+2. It executes the suite: "All Test Suite".
+3. Inside it runs test: "APIAutomationProgram".
+4. Then it runs the specified class:
+   ApiTest27_RA_Assertions.
+-->
