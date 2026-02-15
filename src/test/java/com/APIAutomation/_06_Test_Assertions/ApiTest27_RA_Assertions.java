@@ -1,60 +1,110 @@
 package com.APIAutomation._06_Test_Assertions;
 
+// ======================= IMPORTS =======================
+
+// Allure annotations → Used for reporting purpose
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+
+// Rest Assured → Used for API automation
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import org.hamcrest.Matcher;
+
+// Hamcrest Matchers → Used for assertions
 import org.hamcrest.Matchers;
+
+// TestNG → Used for test execution
 import org.testng.annotations.Test;
 
+/**
+ * This class demonstrates:
+ * 1. How to send POST request using Rest Assured
+ * 2. How to validate response using Hamcrest matchers
+ * 3. How to integrate Allure reporting annotations
+ */
 public class ApiTest27_RA_Assertions {
-    RequestSpecification r;
-    Response response;
-    ValidatableResponse vr;
-    String token;
-    Integer bookingID;
 
-    @Owner("Anuj")
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("TC#1 is for verifying the create Booking is working fine & Booking Id is not null")
+    // RequestSpecification → Used to build the HTTP request
+    private RequestSpecification request;
+
+    // Response → Stores actual response received from server
+    private Response response;
+
+    // ValidatableResponse → Used for performing assertions
+    private ValidatableResponse validatableResponse;
+
+    /**
+     * Test Case:
+     * Verify that booking is created successfully
+     * and important fields in response are correct.
+     */
+    @Owner("Anuj") // Shows test owner in Allure report
+    @Severity(SeverityLevel.CRITICAL) // Marks severity level in Allure report
+    @Description("TC#1 - Verify booking creation & bookingId is not null")
     @Test
-    public void test_createBooking_POST(){
-        String Payload = "{\n" +
-                "        \"firstname\": \"James\",\n" +
-                "        \"lastname\": \"Brown\",\n" +
-                "        \"totalprice\": 111,\n" +
-                "        \"depositpaid\": true,\n" +
-                "        \"bookingdates\": {\n" +
-                "            \"checkin\": \"2018-01-01\",\n" +
-                "            \"checkout\": \"2025-10-10\"\n" +
-                "        },\n" +
-                "        \"additionalneeds\": \"Breakfast\"\n" +
-                "    }";
-        r = RestAssured.given();
-        r.baseUri("https://restful-booker.herokuapp.com");
-        r.basePath("/booking");
-        r.contentType(ContentType.JSON);
-        r.body(Payload);
+    public void testCreateBooking_POST() {
 
-        response = r.when().post();
+        // ======================= TEST DATA (Request Body) =======================
 
-        vr = response.then().statusCode(200);
+        // JSON payload sent in POST request
+        String payload = "{\n" +
+                "    \"firstname\": \"James\",\n" +
+                "    \"lastname\": \"Brown\",\n" +
+                "    \"totalprice\": 111,\n" +
+                "    \"depositpaid\": true,\n" +
+                "    \"bookingdates\": {\n" +
+                "        \"checkin\": \"2018-01-01\",\n" +
+                "        \"checkout\": \"2025-10-10\"\n" +
+                "    },\n" +
+                "    \"additionalneeds\": \"Breakfast\"\n" +
+                "}";
 
-        //till now we have validated only for the status code
-        //but we also want to validate the firstname==james, Lastname==brown
-        //BookingID must not be null
+        // ======================= BUILD REQUEST =======================
 
-        //here matchers comes from the hamcrest library
-        vr.body("booking.firstname", Matchers.equalTo("James"));
-        vr.body("booking.lastname", Matchers.equalTo("Brown"));
-        vr.body("booking.depositpaid", Matchers.equalTo(true));
-        vr.body("bookingid", Matchers.notNullValue());
+        request = RestAssured.given()              // Start building request
+                .baseUri("https://restful-booker.herokuapp.com")  // Base URL
+                .basePath("/booking")              // Endpoint
+                .contentType(ContentType.JSON)     // Set request content type
+                .body(payload);                    // Attach JSON body
 
+        // ======================= SEND REQUEST =======================
+
+        response = request.when().post();          // Send POST request
+
+        // ======================= VALIDATE STATUS CODE =======================
+
+        validatableResponse = response.then()
+                .statusCode(200);                  // Validate HTTP status code is 200 OK
+
+        // ======================= VALIDATE RESPONSE BODY =======================
+
+        validatableResponse
+                // Validate firstname = "James"
+                .body("booking.firstname", Matchers.equalTo("James"))
+
+                // Validate lastname = "Brown"
+                .body("booking.lastname", Matchers.equalTo("Brown"))
+
+                // Validate depositpaid = true
+                .body("booking.depositpaid", Matchers.equalTo(true))
+
+                // Validate bookingid is NOT null
+                .body("bookingid", Matchers.notNullValue());
+
+        /*
+         If all assertions pass:
+         → Test will PASS
+         → Booking is successfully created
+         → bookingid is generated
+         
+         If any assertion fails:
+         → Test will FAIL
+         → Mismatch details will be shown in console and Allure report
+         */
     }
 }
