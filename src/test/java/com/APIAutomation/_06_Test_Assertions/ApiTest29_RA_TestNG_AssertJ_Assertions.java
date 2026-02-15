@@ -1,84 +1,138 @@
 package com.APIAutomation._06_Test_Assertions;
+
+// ========================== IMPORTS ==========================
+
+// Allure Reporting
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+
+// Rest Assured
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+
+// Hamcrest (Default RA Assertions)
 import org.hamcrest.Matchers;
+
+// TestNG Assertions
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import static org.assertj.core.api.Assertions.*;
 
-import static org.assertj.core.api.Assertions.*;
+// AssertJ Assertions
+import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * This class demonstrates:
+ * 1. Rest Assured default assertions (Hamcrest)
+ * 2. TestNG assertions
+ * 3. AssertJ assertions
+ * 
+ * All are validating the same API response.
+ */
 public class ApiTest29_RA_TestNG_AssertJ_Assertions {
-    RequestSpecification r;
-    Response response;
-    ValidatableResponse vr;
-    String token;
-    Integer bookingID;
+
+    // Request builder
+    private RequestSpecification request;
+
+    // Raw response
+    private Response response;
+
+    // Used for Rest Assured validations
+    private ValidatableResponse validatableResponse;
 
     @Owner("Anuj")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("TC#1 is for verifying the create Booking is working fine & Booking Id is not null")
+    @Description("Verify booking creation & validate response using RA, TestNG & AssertJ")
     @Test
-    public void test_createBooking_POST(){
-        String Payload = "{\n" +
-                "        \"firstname\": \"James\",\n" +
-                "        \"lastname\": \"Brown\",\n" +
-                "        \"totalprice\": 111,\n" +
-                "        \"depositpaid\": true,\n" +
-                "        \"bookingdates\": {\n" +
-                "            \"checkin\": \"2018-01-01\",\n" +
-                "            \"checkout\": \"2025-10-10\"\n" +
-                "        },\n" +
-                "        \"additionalneeds\": \"Breakfast\"\n" +
-                "    }";
-        r = RestAssured.given();
-        r.baseUri("https://restful-booker.herokuapp.com");
-        r.basePath("/booking");
-        r.contentType(ContentType.JSON);
-        r.body(Payload);
+    public void testCreateBooking_POST() {
 
-        response = r.when().post();
+        // ========================== REQUEST PAYLOAD ==========================
 
-        vr = response.then().statusCode(200);
+        String payload = """
+                {
+                    "firstname": "James",
+                    "lastname": "Brown",
+                    "totalprice": 111,
+                    "depositpaid": true,
+                    "bookingdates": {
+                        "checkin": "2018-01-01",
+                        "checkout": "2025-10-10"
+                    },
+                    "additionalneeds": "Breakfast"
+                }
+                """;
 
-        //till now we have validated only for the status code
-        //but we also want to validate the firstname==james, Lastname==brown
-        //BookingID must not be null
+        // ========================== BUILD REQUEST ==========================
 
-        //here matchers comes from the hamcrest library //4-5% companies are using this
-        vr.body("booking.firstname", Matchers.equalTo("James"));
-        vr.body("booking.lastname", Matchers.equalTo("Brown"));
-        vr.body("booking.depositpaid", Matchers.equalTo(true));
-        vr.body("bookingid", Matchers.notNullValue());
-        //These above were the Default Rest Assured Assertions
+        request = RestAssured.given()
+                .baseUri("https://restful-booker.herokuapp.com") // Base URL
+                .basePath("/booking")                            // Endpoint
+                .contentType(ContentType.JSON)                   // JSON request
+                .body(payload);                                  // Attach body
 
-        //now we want to add testNG and AssertJ Assertions all of these
-        //to work with TestNG assertions we need to extract the details
-            //firstname, bookingId, lastname, depositepaid
-        Integer bookingid = response.then().extract().path("bookingid");
-        String firstname = response.then().extract().path("booking.firstname");
-        String lastname = response.then().extract().path("booking.lastname");
-        boolean depositepaid = response.then().extract().path("booking.depositpaid");
+        // ========================== SEND REQUEST ==========================
 
-        //now we can use the testNG assertions - 75% companies still using this
-        Assert.assertNotNull(bookingid, "Booking ID should not be null");
-        Assert.assertEquals(firstname,"James");
-        Assert.assertEquals(lastname,"Brown");
-        Assert.assertTrue(depositepaid);
-        //we don't use the soft assertions in these
+        response = request.when().post(); // Send POST request
 
-        //AssertJ (3rd Library for assertions) - 20% Companies are using
-        assertThat(bookingid).isNotZero().isNotNull().isPositive();//3 assertions in 1 line
-        assertThat(firstname).isEqualTo("James").isNotBlank().isNotEmpty().isNotNull().isAlphanumeric();
-        assertThat(lastname).isEqualTo("Brown");
-        assertThat(depositepaid).isTrue();
+        // ========================== STATUS CODE VALIDATION ==========================
 
+        validatableResponse = response.then().statusCode(200);
+        // If status is not 200 → test fails here
+
+        // ========================== 1️⃣ REST ASSURED ASSERTIONS ==========================
+
+        validatableResponse
+                .body("booking.firstname", Matchers.equalTo("James"))
+                .body("booking.lastname", Matchers.equalTo("Brown"))
+                .body("booking.depositpaid", Matchers.equalTo(true))
+                .body("bookingid", Matchers.notNullValue());
+        // These are default Rest Assured (Hamcrest) assertions
+
+        // ========================== EXTRACT VALUES ==========================
+
+        Integer bookingId = response.then().extract().path("bookingid");
+        String firstName = response.then().extract().path("booking.firstname");
+        String lastName = response.then().extract().path("booking.lastname");
+        boolean depositPaid = response.then().extract().path("booking.depositpaid");
+
+        // ========================== 2️⃣ TESTNG ASSERTIONS ==========================
+
+        Assert.assertNotNull(bookingId, "Booking ID should not be null");
+        Assert.assertEquals(firstName, "James");
+        Assert.assertEquals(lastName, "Brown");
+        Assert.assertTrue(depositPaid);
+        // If any assertion fails → execution stops immediately (Hard Assert)
+
+        // ========================== 3️⃣ ASSERTJ ASSERTIONS ==========================
+
+        assertThat(bookingId)
+                .isNotNull()
+                .isPositive()
+                .isNotZero(); // Multiple validations in one fluent line
+
+        assertThat(firstName)
+                .isEqualTo("James")
+                .isNotBlank()
+                .isNotEmpty()
+                .isAlphanumeric();
+
+        assertThat(lastName)
+                .isEqualTo("Brown");
+
+        assertThat(depositPaid)
+                .isTrue();
+
+        /*
+         If all validations pass:
+         → Booking successfully created
+         → All 3 assertion styles validated correctly
+
+         If any assertion fails:
+         → Test fails at that specific assertion point
+        */
     }
 }
