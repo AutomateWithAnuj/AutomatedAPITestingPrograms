@@ -1,25 +1,83 @@
 package com.APIAutomation._06_Test_Assertions;
 
+// ======================= IMPORTS =======================
+
+// TestNG Hard Assertion
 import org.testng.Assert;
+
+// TestNG Annotations
 import org.testng.annotations.Test;
+
+// TestNG Soft Assertion
 import org.testng.asserts.SoftAssert;
 
+/**
+ * This class demonstrates:
+ * 1. Difference between Hard Assertion and Soft Assertion in TestNG
+ * 2. How execution flow behaves when assertion fails
+ */
 public class ApiTest28_TestNG_Assertions {
-    @Test(enabled=false)
-    public void test_hardAssertExample(){
+
+    /**
+     * HARD ASSERT EXAMPLE
+     * If assertion fails → execution stops immediately.
+     */
+    @Test(enabled = false) // Disabled test (will not execute)
+    public void testHardAssertExample() {
+
         System.out.println("Start of the Program");
-        Assert.assertEquals("anuj","Anuj"); //Hard Assertion
-        System.out.println("End of the program"); //Skipped if above assertion fails
+        // Console Output: Start of the Program
+
+        // Hard Assertion → Stops execution if condition fails
+        Assert.assertEquals("anuj", "Anuj");  
+        // This will FAIL because "anuj" ≠ "Anuj" (case-sensitive comparison)
+
+        // This line will NOT execute if assertion fails above
+        System.out.println("End of the Program");
+        // Skipped due to assertion failure
     }
+
+
+    /**
+     * SOFT ASSERT EXAMPLE
+     * If assertion fails → execution continues.
+     * But we MUST call assertAll() at the end.
+     */
     @Test
-    public void test_softAssertExample(){
+    public void testSoftAssertExample() {
+
         System.out.println("Start of the Program");
-        Boolean is_neeru_male = false;
+        // Console Output: Start of the Program
+
+        Boolean isNeeruMale = false;  
+        // Sample variable (not used in assertion, just for demonstration)
+
+        // Create object of SoftAssert
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals("anuj","Anuj"); //Soft Assertion
-        System.out.println("End of the program"); //Run if above assertion fails or passed
-        softAssert.assertAll();  //it means assert all the asserts above
-        //we can use soft assertion if we would like to continue the execution
-        //it can be used when a small icon not working sometimes
+
+        // Soft Assertion → Does NOT stop execution immediately
+        softAssert.assertEquals("anuj", "Anuj");
+        // This will FAIL but execution continues
+
+        System.out.println("End of the Program");
+        // Console Output: End of the Program (This WILL execute)
+
+        // IMPORTANT: Collects all soft assertion results
+        softAssert.assertAll();  
+        /*
+           If any soft assertion failed above:
+           → Test will FAIL here.
+           
+           If all soft assertions passed:
+           → Test will PASS.
+           Soft assertions allow test execution to continue until assertAll() is called. Once assertAll() executes, 
+           if any assertion has failed, it throws AssertionError and stops further execution.
+        */
+
+        /*
+         Soft Assertions are useful when:
+         → You want test to continue execution
+         → You want to validate multiple things in one test
+         */
     }
 }
